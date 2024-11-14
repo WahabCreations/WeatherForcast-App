@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Montserrat", sans-serif, 'Times New Roman', Times, serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #222;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            width: 100%;
+            height: 100vh;
+            background: url('images/cabin.jpg');
+        }
+
+        .card {
+            width: 90%;
+            max-width: 470px;
+            background: rgba(250, 250, 250, 0.2);
+            color: #fff;
+            margin: 50px auto;
+            padding: 40px 35px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .search {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .search input {
+            border: 0;
+            outline: 0;
+            background: #ebfffc;
+            color: #555;
+            padding: 10px 25px;
+            height: 60px;
+            border-radius: 30px;
+            flex: 1;
+            margin-right: 16px;
+            font-size: 18px;
+            min-width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .search button {
+            border: 0;
+            outline: 0;
+            background: #ebfffc;
+            border-radius: 100rem;
+            height: 3rem;
+            width: 3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search button img {
+            width: 16px;
+        }
+
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 10;
+            display: none;
+        }
+
+        .suggestions p {
+            padding: 10px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .suggestions p:hover {
+            background: #ebfffc;
+        }
+
+        .weather-icon {
+            width: 100%;
+            max-width: 170px;
+            margin-top: 30px;
+        }
+
+        .weather h1 {
+            font-size: 80px;
+            font-weight: 500;
+        }
+
+        .weather h2 {
+            font-size: 45px;
+            font-weight: 400;
+            margin-top: -10px;
+        }
+
+        .details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            display: flex;
+            align-items: center;
+            text-align: left;
+            flex: 1;
+            margin-bottom: 20px;
+        }
+
+        .col img {
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .humidity,
+        .wind {
+            font-size: 28px;
+            margin-top: -6px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1280px) {
+            .card {
+                width: 80%;
+                padding: 30px;
+            }
+
+            .search input {
+                padding: 10px 20px;
+                height: 55px;
+                font-size: 16px;
+            }
+
+            .weather h1 {
+                font-size: 70px;
+            }
+
+            .weather h2 {
+                font-size: 40px;
+            }
+
+            .humidity,
+            .wind {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .card {
+                width: 90%;
+                padding: 25px;
+            }
+
+            .search input {
+                padding: 10px 15px;
+                height: 50px;
+                font-size: 14px;
+            }
+
+            .weather h1 {
+                font-size: 60px;
+            }
+
+            .weather h2 {
+                font-size: 35px;
+            }
+
+            .humidity,
+            .wind {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .search input {
+                padding: 8px 15px;
+                height: 45px;
+                font-size: 14px;
+            }
+
+            .weather h1 {
+                font-size: 50px;
+            }
+
+            .weather h2 {
+                font-size: 30px;
+            }
+
+            .humidity,
+            .wind {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .search input {
+                padding: 5px 10px;
+                height: 40px;
+                font-size: 12px;
+            }
+
+            .weather h1 {
+                font-size: 40px;
+            }
+
+            .weather h2 {
+                font-size: 25px;
+            }
+
+            .humidity,
+            .wind {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 330px) {
+            .card {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .search input {
+                padding: 5px 10px;
+                height: 35px;
+                font-size: 10px;
+            }
+
+            .weather h1 {
+                font-size: 30px;
+            }
+
+            .weather h2 {
+                font-size: 20px;
+            }
+
+            .humidity,
+            .wind {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" id="city-input" placeholder="Enter city name" spellcheck="false">
+            <button>
+                <img src="images/search.png" alt="Search">
+            </button>
+            <div class="suggestions" id="suggestions">
+                <!-- Suggestions will appear here -->
+            </div>
+        </div>
+        <div class="weather">
+            <img src="images/rain.png" class="weather-icon" alt="Weather Icon">
+            <h1 class="temp">22°C</h1>
+            <h2 class="city">Islamabad</h2>
+            <div class="details">
+                <div class="col">
+                    <img src="images/humidity.png" alt="Humidity Icon">
+                    <div>
+                        <p class="humidity">50%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="images/wind.png" alt="Wind Icon">
+                    <div>
+                        <p class="wind">15 km/h</p>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const apikey = "2bc0fae701693b1179698b247301ac78";
+        const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&";
+
+        const searchBox = document.querySelector(".search input");
+        const searchBtn = document.querySelector(".search button");
+        const weatherIcon = document.querySelector(".weather-icon");
+        const suggestionsBox = document.getElementById('suggestions');
+        const cityInput = document.getElementById('city-input');
+
+        const cities = ["Islamabad", "Karachi", "Lahore", "Peshawar", "Quetta", "New York", "London", "Paris", "Tokyo", "Sydney"];
+
+        async function checkweather(city) {
+            const response = await fetch(apiURL + `q=${city}&appid=${apikey}`);
+            var data = await response.json();
+
+            document.querySelector(".city").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML = data.main.temp + "°C";
+            document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+            document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
+
+            if (data.weather[0].main == "Clouds") {
+                weatherIcon.src = "images/clouds.png";
+            } else if (data.weather[0].main == "Clear") {
+                weatherIcon.src = "images/clear.png";
+            } else if (data.weather[0].main == "Mist") {
+                weatherIcon.src = "images/mist.png";
+            } else if (data.weather[0].main == "Snow") {
+                weatherIcon.src = "images/snow.png";
+            } else if (data.weather[0].main == "Wind") {
+                weatherIcon.src = "images/wind.png";
+            } else if (data.weather[0].main == "Drizzle") {
+                weatherIcon.src = "images/drizzle.png";
+            } else if (data.weather[0].main == "Rain") {
+                weatherIcon.src = "images/rain.png";
+            }
+        }
+
+        searchBtn.addEventListener("click", () => {
+            checkweather(searchBox.value);
+        });
+
+        searchBox.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                checkweather(searchBox.value);
+            }
+        });
+
+        cityInput.addEventListener("input", () => {
+            const value = cityInput.value.toLowerCase();
+            suggestionsBox.innerHTML = '';
+            if (value) {
+                const filteredCities = cities.filter(city => city.toLowerCase().startsWith(value));
+                filteredCities.forEach(city => {
+                    const suggestion = document.createElement('p');
+                    suggestion.textContent = city;
+                    suggestion.addEventListener('click', () => {
+                        cityInput.value = city;
+                        suggestionsBox.innerHTML = '';
+                    });
+                    suggestionsBox.appendChild(suggestion);
+                });
+                suggestionsBox.style.display = 'block';
+            } else {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+        cityInput.addEventListener("blur", () => {
+            setTimeout(() => {
+                suggestionsBox.style.display = 'none';
+            }, 100);
+        });
+
+        cityInput.addEventListener("focus", () => {
+            if (cityInput.value) {
+                suggestionsBox.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+
+</html>
